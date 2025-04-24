@@ -90,7 +90,7 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
 
                 // Successful authentication
                 if ( $surveyPage === 1 || empty($surveyPage) ) {
-                    $this->sauthLog(self::MODULE_NAME . ': Survey Auth Succeeded', [
+                    $this->authLog(self::MODULE_NAME . ': Survey Auth Succeeded', [
                         "ShibbolethAuthenticator_Id" => $id,
                         "instrument"             => $instrument,
                         "event_id"               => $event_id,
@@ -220,7 +220,7 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
                 }
 
                 // Successful authentication
-                $this->sauthLog(self::MODULE_NAME . ': Dashboard Auth Succeeded', [
+                $this->authLog(self::MODULE_NAME . ': Dashboard Auth Succeeded', [
                     "ShibbolethAuthenticator_Id" => $id,
                     "dashboard_hash"         => $dashboard_hash,
                     "dashboard_id"           => $dashboard['dash_id'],
@@ -263,7 +263,7 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
                 }
 
                 // Successful authentication
-                $this->sauthLog(self::MODULE_NAME . ': Report Auth Succeeded', [
+                $this->authLog(self::MODULE_NAME . ': Report Auth Succeeded', [
                     "ShibbolethAuthenticator_Id" => $id,
                     "report_hash"            => $report_hash,
                     "report_id"              => $report['report_id'],
@@ -318,7 +318,7 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
             }
 
             // Successful authentication
-            $this->sauthLog(self::MODULE_NAME . ': File Auth Succeeded', [
+            $this->authLog(self::MODULE_NAME . ': File Auth Succeeded', [
                 "ShibbolethAuthenticator_Id" => $id,
                 "file_hash"            => $file_hash,
                 "docs_id"              => $file['docs_id'],
@@ -497,9 +497,10 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
                 return $username;
             }
             $authenticator = new Authenticator($this);
-            $authenticator->handleAuth(Utilities::curPageURL());
+            $curPageUrl = Utilities::curPageURL();
+            $authenticator->handleAuth($curPageUrl);
         } catch ( \Throwable $e ) {
-            $this->framework->log(self::MODULE_NAME . ': Error authenticating', [ 'error' => json_encode($e, JSON_PRETTY_PRINT) ]);
+            $this->framework->log(self::MODULE_NAME . ': Error authenticating', [ 'errorMessage' => $e->getMessage, 'error' => json_encode($e, JSON_PRETTY_PRINT) ]);
             return false;
         }
     }
@@ -586,7 +587,7 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
         }
     }
 
-    private function sauthLog($message, $params = [], $record = null, $event = null)
+    private function authLog($message, $params = [], $record = null, $event = null)
     {
         $doProjectLogging = $this->getProjectSetting('logging');
         if ( $doProjectLogging ) {

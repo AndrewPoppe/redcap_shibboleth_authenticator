@@ -4,11 +4,7 @@ namespace YaleREDCap\ShibbolethAuthenticator;
 
 class Authenticator
 {
-    private $clientId;
-    private $adTenant;
-    private $clientSecret;
-    private $redirectUri;
-    private $domain;
+
     private $module;
     private $sessionId;
     private $settings;
@@ -18,23 +14,24 @@ class Authenticator
     {
         $this->module          = $module;
         $this->sessionId       = $sessionId ?? session_id();
-        $this->settings        = $module->getSettings();
-        $this->setSiteAttributes();
     }
 
     public function authenticate(bool $refresh = false, string $originUrl = '')
     {
-        $state = encrypt($this->sessionId . EntraIdAuthenticator::ENTRAID_STATE_SEPARATOR . $originUrl);
-        $url = "https://login.microsoftonline.com/" . $this->adTenant . "/oauth2/v2.0/authorize?";
-        $url .= "state=" . base64_encode($state);
-        $url .= "&scope=User.Read";
-        $url .= "&response_type=code";
-        $url .= "&approval_prompt=auto";
-        $url .= "&client_id=" . $this->clientId;
-        $url .= "&redirect_uri=" . urlencode($this->redirectUri);
-        $url .= $refresh ? "&prompt=login" : "";
-        $url .= "&domain_hint=" . $this->domain;
-        header("Location: " . $url);
+        // $state = encrypt($this->sessionId . EntraIdAuthenticator::ENTRAID_STATE_SEPARATOR . $originUrl);
+        // $url = "https://login.microsoftonline.com/" . $this->adTenant . "/oauth2/v2.0/authorize?";
+        // $url .= "state=" . base64_encode($state);
+        // $url .= "&scope=User.Read";
+        // $url .= "&response_type=code";
+        // $url .= "&approval_prompt=auto";
+        // $url .= "&client_id=" . $this->clientId;
+        // $url .= "&redirect_uri=" . urlencode($this->redirectUri);
+        // $url .= $refresh ? "&prompt=login" : "";
+        // $url .= "&domain_hint=" . $this->domain;
+
+        //header("Location: " . $url);
+        $loginUrl = $this->module->getUrl('login.php' . (empty($originUrl) ? '' : '?return='.urlencode($originUrl)), true, true);
+        header("Location: " . $loginUrl);
     }
 
     public function getAuthData($sessionId, $code)
@@ -127,12 +124,12 @@ class Authenticator
         $this->redirectUri    = $this->settings['redirectUrl'];
     }
 
-    public function handleEntraIDAuth($url)
+    public function handleAuth($url)
     {
         try {
             session_start();
             $sessionId = session_id();
-            \Session::savecookie(EntraIdAuthenticator::ENTRAID_SESSION_ID_COOKIE, $sessionId, 0, true);
+            \Session::savecookie(ShibbolethAuthenticator::SHIBBOLETH_SESSION_ID_COOKIE, $sessionId, 0, true);
             $this->authenticate(false, $url);
             return true;
         } catch ( \Throwable $e ) {

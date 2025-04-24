@@ -129,7 +129,7 @@
         }
     ],
     "no-auth-pages": [
-        "sauth_sso_login"
+        "login"
     ],
     "enable-no-auth-logging": true,
     "framework-version": 15,

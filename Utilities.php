@@ -1,11 +1,11 @@
 <?php
 
-namespace YaleREDCap\EntraIdAuthenticator;
+namespace YaleREDCap\ShibbolethAuthenticator;
 
 class Utilities
 {
     private $module;
-    public function __construct(EntraIdAuthenticator $module)
+    public function __construct(ShibbolethAuthenticator $module)
     {
         $this->module = $module;
     }
