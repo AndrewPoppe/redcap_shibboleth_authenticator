@@ -6,14 +6,11 @@ class Authenticator
 {
 
     private $module;
-    private $sessionId;
-    private $settings;
 
     const ERROR_MESSAGE_AUTHENTICATION = 'ShibbolethAuthenticator Authentication Error';
-    public function __construct(ShibbolethAuthenticator $module, string $sessionId = null)
+    public function __construct(ShibbolethAuthenticator $module)
     {
         $this->module          = $module;
-        $this->sessionId       = $sessionId ?? session_id();
     }
 
     public function handleAuth($url)

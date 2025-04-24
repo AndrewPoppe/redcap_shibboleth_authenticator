@@ -8,7 +8,6 @@ namespace YaleREDCap\ShibbolethAuthenticator;
  */
 
 require_once 'Authenticator.php';
-require_once 'Utilities.php';
 class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
 {
 
@@ -186,7 +185,12 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
 
     public function getSettings()
     {
-        $settings = $this->framework->getSystemSettings();
+        $settings = [
+            'login-field' => $this->framework->getSystemSetting('login-field'),
+            'firstname-field' => $this->framework->getSystemSetting('firstname-field'),
+            'lastname-field' => $this->framework->getSystemSetting('lastname-field'),
+            'email-field' => $this->framework->getSystemSetting('email-field')
+        ];
         if ($this->framework->getProjectId() !== null) {
             $settings = array_merge($settings, $this->framework->getProjectSettings());
         } 
@@ -507,7 +511,7 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
                 return $username;
             }
             $authenticator = new Authenticator($this);
-            $curPageUrl = Utilities::curPageURL();
+            $curPageUrl = $_SERVER["REQUEST_URI"];
             $authenticator->handleAuth($curPageUrl);
         } catch ( \Throwable $e ) {
             $this->framework->log(self::MODULE_NAME . ': Error authenticating', [ 'errorMessage' => $e->getMessage, 'error' => json_encode($e, JSON_PRETTY_PRINT) ]);

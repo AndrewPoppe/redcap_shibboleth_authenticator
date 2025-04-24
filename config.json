@@ -11,6 +11,27 @@
     ],
     "system-settings": [
         {
+            "key": "login-field",
+            "name": "<strong>Shibboleth Username Login Field</strong>:<br>Name of the server variable that contains the user's username that Shibboleth defines in PHP (e.g. $_SERVER['REMOTE_USER'])",
+            "type": "text",
+            "required": true
+        },
+        {
+            "key": "firstname-field",
+            "name": "<strong>Shibboleth First Name Field</strong>:<br>Name of the server variable that contains the user's first name that Shibboleth defines in PHP (e.g. $_SERVER['givenName'])",
+            "type": "text"
+        },
+        {
+            "key": "lastname-field",
+            "name": "<strong>Shibboleth Last Name Field</strong>:<br>Name of the server variable that contains the user's last name that Shibboleth defines in PHP (e.g. $_SERVER['sn'])",
+            "type": "text"
+        },
+        {
+            "key": "email-field",
+            "name": "<strong>Shibboleth Email Field</strong>:<br>Name of the server variable that contains the user's email address that Shibboleth defines in PHP (e.g. $_SERVER['mail'])",
+            "type": "text"
+        },
+        {
             "key": "shibboleth-idp",
             "name": "Shibboleth Identity Provider",
             "type": "sub_settings",
@@ -37,27 +58,6 @@
                     "type": "text"
                 }
             ]
-        },
-        {
-            "key": "login-field",
-            "name": "<strong>Shibboleth Username Login Field</strong>:<br>Name of the server variable that contains the user's username that Shibboleth defines in PHP (e.g. $_SERVER['REMOTE_USER'])",
-            "type": "text",
-            "required": true
-        },
-        {
-            "key": "firstname-field",
-            "name": "<strong>Shibboleth First Name Field</strong>:<br>Name of the server variable that contains the user's first name that Shibboleth defines in PHP (e.g. $_SERVER['givenName'])",
-            "type": "text"
-        },
-        {
-            "key": "lastname-field",
-            "name": "<strong>Shibboleth Last Name Field</strong>:<br>Name of the server variable that contains the user's last name that Shibboleth defines in PHP (e.g. $_SERVER['sn'])",
-            "type": "text"
-        },
-        {
-            "key": "email-field",
-            "name": "<strong>Shibboleth Email Field</strong>:<br>Name of the server variable that contains the user's email address that Shibboleth defines in PHP (e.g. $_SERVER['mail'])",
-            "type": "text"
         }
     ],
     "project-settings": [
