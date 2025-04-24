@@ -25,7 +25,7 @@ echo '</pre>';
         <div class="col-6">
             <?php foreach ($settings['idps'] as $idp) { ?>
                 <div class="card mb-3 bg-light">
-                    <a class="text-decoration-none text-body" href="<?php echo $idp['idp-url']?>">
+                    <a class="text-decoration-none text-body" href="<?php echo $idp['idp-url'].'&target='.$_GET['return']?>">
                         <div class="card-body text-center">
                             <img src="<?php echo $module->framework->escape($idp['idp-link-image-url']); ?>" alt="Logo" class="my-3" style="width: 300px; height: auto;">
                             <p class="card-text"><?php echo $module->framework->escape($idp['idp-text']); ?></p>
