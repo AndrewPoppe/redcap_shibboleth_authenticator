@@ -22,7 +22,7 @@ class Authenticator
             session_start();
             $sessionId = session_id();
             \Session::savecookie(ShibbolethAuthenticator::SHIBBOLETH_SESSION_ID_COOKIE, $sessionId, 0, true);
-            $loginUrl = $this->module->getLoginUrl($originUrl);
+            $loginUrl = $this->module->getLoginUrl($url);
             header("Location: " . $loginUrl);
             return true;
         } catch ( \Throwable $e ) {
