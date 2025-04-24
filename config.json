@@ -17,21 +17,6 @@
             "required": true
         },
         {
-            "key": "firstname-field",
-            "name": "<strong>Shibboleth First Name Field</strong>:<br>Name of the server variable that contains the user's first name that Shibboleth defines in PHP (e.g. $_SERVER['givenName'])",
-            "type": "text"
-        },
-        {
-            "key": "lastname-field",
-            "name": "<strong>Shibboleth Last Name Field</strong>:<br>Name of the server variable that contains the user's last name that Shibboleth defines in PHP (e.g. $_SERVER['sn'])",
-            "type": "text"
-        },
-        {
-            "key": "email-field",
-            "name": "<strong>Shibboleth Email Field</strong>:<br>Name of the server variable that contains the user's email address that Shibboleth defines in PHP (e.g. $_SERVER['mail'])",
-            "type": "text"
-        },
-        {
             "key": "shibboleth-idp",
             "name": "Shibboleth Identity Provider",
             "type": "sub_settings",
@@ -73,7 +58,7 @@
         },
         {
             "key": "login-message",
-            "name": "<strong>Login message</strong>:<br>Enter a message to be displayed on the login page",
+            "name": "<strong>Login message</strong>:<br>Enter a message to be displayed on the login page. This will only",
             "type": "text"
         },
         {
@@ -90,21 +75,24 @@
                 {
                     "key": "event",
                     "name": "<strong>Event</strong>:<br>Leave blank if not applicable or if authentication should apply to the chosen survey across all events",
-                    "required": false,
                     "type": "event-list",
                     "autocomplete": true
                 },
                 {
                     "key": "survey",
                     "name": "<strong>Survey</strong>",
-                    "required": false,
                     "type": "dropdown",
                     "autocomplete": true
                 },
                 {
                     "key": "id-field",
                     "name": "<strong>ID Field</strong>:<br>If you want to store the id of the person who logged in, select the field to store it here (it should be a text input field on the same survey)",
-                    "required": false,
+                    "type": "field-list",
+                    "autocomplete": true
+                },
+                {
+                    "key": "idp-field",
+                    "name": "<strong>Identity Provider Field</strong>:<br>If you want to store the IdP that the person used to log in, select the field to store it here (it should be a text input field on the same survey)",
                     "type": "field-list",
                     "autocomplete": true
                 }

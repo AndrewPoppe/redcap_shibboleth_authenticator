@@ -87,6 +87,8 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
                     return;
                 }
 
+                $idp = urldecode($_GET['idp']) ?? '';
+
                 // Successful authentication
                 if ( $surveyPage === 1 || empty($surveyPage) ) {
                     $this->authLog(self::MODULE_NAME . ': Survey Auth Succeeded', [
@@ -105,18 +107,26 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
                     ]);
                 }
 
-                $field = $projectSettings["id-field"][$index];
+                $idField = $projectSettings["id-field"][$index];
+                $idpField = $projectSettings["idp-field"][$index];
+                $this->log('ok', ['ok'=>$idpField, 'idp'=>$idp]);
 
-                if ( $field !== null ) {
+                if ( !empty($idField) || !empty($idpField) ) {
                     ?>
                     <script>
                         const ready = fn => document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn);
                             ready(function () {
-                                field = $(`input[name="<?= $field ?>"]`);
-                                id = "<?= $id ?>";
-                                if (field.length) {
-                                    field.val(id);
-                                    field.closest('tr').addClass('@READONLY');
+                                const idField = $(`input[name="<?= $idField ?>"]`);
+                                const id = "<?= $id ?>";
+                                if (idField.length) {
+                                    idField.val(id);
+                                    idField.closest('tr').addClass('@READONLY');
+                                }
+                                const idpField = $(`input[name="<?= $idpField ?>"]`);
+                                const idp = "<?= $idp ?>";
+                                if (idpField.length) {
+                                    idpField.val(idp);
+                                    idpField.closest('tr').addClass('@READONLY');
                                 }
                             });
                     </script>

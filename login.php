@@ -14,11 +14,19 @@ $shibIdp = $_SESSION[ShibbolethAuthenticator::SHIBBOLETH_IDP];
 
 if (empty($shibUsername) && !empty($_SERVER[$settings['login-field']])) {
     $_SESSION[ShibbolethAuthenticator::SHIBBOLETH_USERNAME] = $shibUsername = $_SERVER[$settings['login-field']];
-    $_SESSION[ShibbolethAuthenticator::SHIBBOLETH_IDP] = $shibIdp = urldecode($_GET['idp']);
+    $idpParts = explode($_GET['return'], 'idp');
+    $shibIdp = urldecode(count($idpParts) > 1 ? $idpParts[1] : "");
+    $_SESSION[ShibbolethAuthenticator::SHIBBOLETH_IDP] = $shibIdp;
 }
 
 if (!empty($shibUsername)) {
     header('Location:' . urldecode($_GET['return']));
+    exit;
+}
+
+if (count($settings['idps']) == 1) {
+    $idp = $settings['idps'][0];
+    header('Location:' . $idp['idp-url'].'&target='.urlencode($_GET['return'].'&idp='.$idp['idp-name']));
     exit;
 }
 
@@ -47,4 +55,5 @@ if (!empty($shibUsername)) {
                 </div>
             <?php } ?>
         </div>
+    </div>
 </body>
