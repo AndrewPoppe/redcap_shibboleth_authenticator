@@ -186,8 +186,18 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
 
     public function getSettings()
     {
-        $settings = $this->framework->getSubSettings('shibboleth-idp') ?? [];
+        $settings = $this->framework->getSystemSettings();
+        if ($this->framework->getProjectId() !== null) {
+            $settings = array_merge($settings, $this->framework->getProjectSettings());
+        } 
+        $settings['idps'] = $this->framework->getSubSettings('shibboleth-idp') ?? [];
         return $settings;
+    }
+
+    public function getLoginUrl(string $returnUrl = '')
+    {
+        $loginUrl = $this->getUrl('login.php' . (empty($returnUrl) ? '' : '?return='.urlencode($returnUrl)), true, true);
+        return $loginUrl;
     }
 
     private function handleDashboard($dashboard_hash)
