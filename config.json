@@ -58,7 +58,7 @@
         },
         {
             "key": "login-message",
-            "name": "<strong>Login message</strong>:<br>Enter a message to be displayed on the login page. This will only",
+            "name": "<strong>Login message</strong>:<br>Enter a message to be displayed on the login page. This will only be displayed if the project is configured to use multiple Identity Providers",
             "type": "text"
         },
         {
