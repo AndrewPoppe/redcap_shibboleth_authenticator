@@ -514,6 +514,10 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
     private function authenticate()
     {
         try {
+            if (empty(session_id()) || session_id() !== $_COOKIE[self::SHIBBOLETH_SESSION_ID_COOKIE]) {
+                session_write_close();
+            }
+            session_set_save_handler(new \SessionHandler(), true);
             session_id($_COOKIE[self::SHIBBOLETH_SESSION_ID_COOKIE]);
             session_start();
             $username = $_SESSION[self::SHIBBOLETH_USERNAME] ?? '';

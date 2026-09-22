@@ -146,11 +146,11 @@
         "login"
     ],
     "enable-no-auth-logging": true,
-    "framework-version": 15,
+    "framework-version": 17,
     "compatibility": {
-        "redcap-version-min": "14.0.31",
+        "redcap-version-min": "17.0.0",
         "redcap-version-max": "",
-        "php-version-min": "7.4.00",
+        "php-version-min": "8.0.00",
         "php-version-max": ""
     }
 }
