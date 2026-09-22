@@ -34,9 +34,9 @@ class ShibbolethAuthenticator extends \ExternalModules\AbstractExternalModule
             return;
         }
 
-        $dashboard_hash = filter_input(INPUT_GET, '__dashboard', FILTER_SANITIZE_STRING);
-        $report_hash    = filter_input(INPUT_GET, '__report', FILTER_SANITIZE_STRING);
-        $file_hash      = filter_input(INPUT_GET, '__file', FILTER_SANITIZE_STRING);
+        $dashboard_hash = strip_tags(filter_input(INPUT_GET, '__dashboard') ?? '');
+        $report_hash    = strip_tags(filter_input(INPUT_GET, '__report') ?? '');
+        $file_hash      = strip_tags(filter_input(INPUT_GET, '__file') ?? '');
 
         if ( isset($dashboard_hash) ) {
             $this->handleDashboard($dashboard_hash);
